@@ -14,31 +14,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if SqlInstancesService
+#if SqlConnectService
   import Foundation
   import GoogleCloudWkt
 
-  /// Instance patch request.
-  public struct SqlInstancesPatchRequest: Codable, Equatable, GoogleCloudWkt._AnyPackable,
+  /// Connect settings retrieval request.
+  public struct ResolveConnectSettingsRequest: Codable, Equatable, GoogleCloudWkt._AnyPackable,
     Sendable
   {
-    /// Cloud SQL instance ID. This does not include the project ID.
-    public var instance: Swift.String = Swift.String()
+    /// Required. Cloud SQL instance ID. This does not include the project ID.
+    public var dnsName: Swift.String = Swift.String()
 
-    /// Project ID of the project that contains the instance.
-    public var project: Swift.String = Swift.String()
+    /// Required. The region of the instance.
+    public var location: Swift.String = Swift.String()
 
-    /// Optional. Set PSC config to the same value as the existing config to
-    /// reconcile the PSC networking.
-    public var reconcilePscNetworking: Swift.Bool? = nil
-
-    /// Optional. Set PSC config to the same value as the existing config and force
-    /// reconcile the PSC networking.
-    public var reconcilePscNetworkingForce: Swift.Bool? = nil
-
-    public var body: DatabaseInstance? = nil
-
-    /// Initialize a new instance of `SqlInstancesPatchRequest`.
+    /// Initialize a new instance of `ResolveConnectSettingsRequest`.
     public init() {}
 
     /// Use `config` to return a new instance of this object, with some fields updated.
@@ -46,7 +36,7 @@
     /// Commonly used to initialize the value, for example:
     ///
     /// ```
-    /// let value = SqlInstancesPatchRequest().with { $0.instance = ... }
+    /// let value = ResolveConnectSettingsRequest().with { $0.dnsName = ... }
     /// ```
     public func with(_ config: (inout Self) throws -> Swift.Void) rethrows -> Self {
       var copy = self
@@ -55,7 +45,7 @@
     }
 
     public static var _anyTypeUrl: Swift.String {
-      return "type.googleapis.com/google.cloud.sql.v1.SqlInstancesPatchRequest"
+      return "type.googleapis.com/google.cloud.sql.v1.ResolveConnectSettingsRequest"
     }
     public init(fromAny any: GoogleCloudWkt.`Any`) throws {
       self = try GoogleCloudWkt._slowAnyDeserialize(Self.self, from: any)
