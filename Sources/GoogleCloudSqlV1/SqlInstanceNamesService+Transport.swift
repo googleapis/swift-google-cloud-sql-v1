@@ -14,16 +14,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if SqlTiersService
+#if SqlInstanceNamesService
   import Foundation
+  #if canImport(FoundationNetworking)
+    import FoundationNetworking
+  #endif
   import GoogleCloudWkt
   import GoogleCloudGax
 
   extension Clients {
-    protocol SqlTiersServiceStub {
-      func list(
-        request: SqlTiersListRequest, options: GoogleCloudGax.RequestOptions
-      ) async throws -> GoogleCloudSqlV1.TiersListResponse
+    class SqlInstanceNamesServiceTransport: SqlInstanceNamesServiceStub {
+      let inner: GoogleCloudGax.HTTPClient
+
+      public init(_ options: GoogleCloudGax.ClientOptions = .init()) throws {
+        self.inner = try GoogleCloudGax.HTTPClient(
+          from: options, withDefaultEndpoint: "https://sqladmin.googleapis.com")
+      }
     }
   }
 #endif
